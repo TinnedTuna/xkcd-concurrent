@@ -14,6 +14,18 @@
   <target name="compile" depends="init">
     <javac includeantruntime="false" srcdir="${src}" destdir="${build}"/>
   </target>
+  <target name="compileDebug" depends="init">
+    <javac includeantruntime="false" debug="true" srcdir="${src}" destdir="${build}"/>
+  </target>
+  <target name="distDebug" depends="clean,compileDebug">
+    <mkdir dir="${dist}/lib/"/>
+    <jar jarfile="${dist}/lib/xkcd-concurrent.jar" basedir="${build}" manifest="${src}/META-INF/MANIFEST.MF"/>
+  </target>
+  <target name="runDebug" depends="distDebug">
+      <java jar="${dist}/lib/xkcd-concurrent.jar" fork="true">
+          <arg value="1000"/>
+      </java>
+  </target>
   <target name="dist" depends="clean,compile">
     <mkdir dir="${dist}/lib/"/>
     <jar jarfile="${dist}/lib/xkcd-concurrent.jar" basedir="${build}" manifest="${src}/META-INF/MANIFEST.MF"/>

@@ -15,4 +15,8 @@ public class HashResult {
     public byte[] getBuf() {
         return this.buf;
     }
+
+    public String toString() {
+        return "HashResult{distance="+distance+'}';
+    }
 }

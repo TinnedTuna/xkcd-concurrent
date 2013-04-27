@@ -1,3 +1,4 @@
+import java.lang.ArrayIndexOutOfBoundsException;
 import java.lang.Runtime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,15 @@ import java.util.Random;
 public class ConcurrentExecutor {
 
     public static void main(String[] argv) throws NoSuchAlgorithmException, InterruptedException, ExecutionException {
-        Integer runs = Integer.valueOf(argv[1]);
+        Integer runs;
+        try {
+          runs = Integer.valueOf(argv[0]);
+        } catch (ArrayIndexOutOfBoundsException aoobex) {
+            System.out.println("Could not get the arguments.");
+            aoobex.printStackTrace();
+            return;
+        }
+
         ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         Random sRandom = new SecureRandom();
 
@@ -40,6 +49,8 @@ public class ConcurrentExecutor {
                 maxima = dist;
             }
         }
+
+        pool.shutdown();
 
         System.out.println(maxima.toString());
     }

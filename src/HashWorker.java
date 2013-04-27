@@ -1,3 +1,4 @@
+import java.lang.Math;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.Callable;
@@ -32,14 +33,14 @@ public class HashWorker implements Callable<HashResult> {
     }
 
     private void hashNext() { 
-        int bufLength = this.random.nextInt() % maxLength;
+        int bufLength = Math.abs(this.random.nextInt() % maxLength);
         byte[] buf = new byte[bufLength];
         this.random.nextBytes(buf);
         this.md.reset();
         this.md.update(buf);
         byte[] digest = this.md.digest();
         int distance = hammingDistance(digest, target);
-        if (distance > localMaxima.getDistance()) {
+        if (localMaxima == null || distance > localMaxima.getDistance()) {
             localMaxima = new HashResult(distance, buf);
         }
     }
