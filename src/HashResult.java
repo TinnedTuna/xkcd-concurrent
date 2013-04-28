@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 public class HashResult {
     private int distance;
     private byte[] buf;
@@ -17,6 +19,7 @@ public class HashResult {
     }
 
     public String toString() {
-        return "HashResult{distance="+distance+'}';
+        String result = new BigInteger(buf).abs().toString(16);
+        return "HashResult{distance="+distance+ " result=\"" + result+"\"}";
     }
 }

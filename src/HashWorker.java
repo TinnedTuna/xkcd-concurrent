@@ -56,14 +56,15 @@ public class HashWorker implements Callable<HashResult> {
 
     private int hammingDistance(byte b1, byte b2) {
         int result = 0;
-        result += (b1 & 0x1) ^ (b2 & 0x1);
-        result += (b1 & 0x2) ^ (b2 & 0x2);
-        result += (b1 & 0x4) ^ (b2 & 0x4);
-        result += (b1 & 0x8) ^ (b2 & 0x8);
-        result += (b1 & 0x10) ^ (b2 & 0x10);
-        result += (b1 & 0x20) ^ (b2 & 0x20);
-        result += (b1 & 0x40) ^ (b2 & 0x40);
-        result += (b1 & 0x80) ^ (b2 & 0x80);
+        int bRes = b1 ^ b2;
+        result += bRes & 0x1;
+        result += (bRes & 0x2) >> 1;
+        result += (bRes & 0x4) >> 2;
+        result += (bRes & 0x8) >> 3;
+        result += (bRes & 0x10) >> 4;
+        result += (bRes & 0x20) >> 5;
+        result += (bRes & 0x40) >> 6;
+        result += (bRes & 0x80) >> 7;
         return result;
     }
 }
